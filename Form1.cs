@@ -14,6 +14,7 @@ namespace Hangman
     public partial class Form1 : Form
     {
         
+	//Attributes
         int i = 0;
         string file;
         string target;
@@ -27,30 +28,11 @@ namespace Hangman
         }
 
        
+	
+	
+	
 
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            
-            WordList wl = new WordList();
-            if (wl.ShowDialog() == DialogResult.OK)
-                file = WordList.path;
-            
-            
-            StreamReader sr = new StreamReader(file);
-            while (sr.ReadLine() != null)
-                i++;
-            sr.Dispose();
-            sr = new StreamReader(file);
-            Random r = new Random();
-            
-            for (int k = 0; k < r.Next(1, i-1); k++)
-                target = sr.ReadLine();
-            sr.Dispose();
-            MessageBox.Show(target);
-            Setting();
-            
-        }
-
+	//här visas ordet "word to guess"
         private void Setting()
         {
             label5.Text = "";
@@ -58,14 +40,14 @@ namespace Hangman
                 label5.Text = label5.Text.Insert(i, "*");
             
         }
-
+	
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
 
         
-
+	//The "Guess" Button
         private void button2_Click(object sender, EventArgs e)
         {
             guess = textBox2.Text[0];
@@ -85,7 +67,7 @@ namespace Hangman
             {
                 tries++;
                 
-                //textBox1.Text = textBox1.Text.Insert(0, " , " +  guess.ToString());
+                
                 guess = textBox2.Text[0];
             }
             hit = false;
@@ -135,11 +117,11 @@ namespace Hangman
             textBox2.Focus();
             textBox2.SelectAll();
         }
-        
+        // Lokaliserar wordlist filen 
         private void WordList_Reader()
         {
             WordList wl = new WordList();
-            WordList.path = "WordList.txt";
+            WordList.path = "wordList.txt";
             file = WordList.path;
             StreamReader sr = new StreamReader(file);
             while (sr.ReadLine() != null)
@@ -150,30 +132,31 @@ namespace Hangman
 
             for (int k = 0; k < r.Next(1, i - 1); k++)
                 target = sr.ReadLine();
-            sr.Dispose();
-            //MessageBox.Show(target);                          //Shows the word randomly selected (Just for a try!)
+            sr.Dispose();                        
             Setting();
         }
         
-        
+        // StartGame Knappen
         private void StartGame()
         {
             WordList_Reader();
             pictureBox1.Image = Hangman.Properties.Resources._0;
             
         }
-
+	// Det som häner om man förlorar
         private void LostGame()
         {
             MessageBox.Show("You lost! Secret word was " + target);
             ResetGame();
         }
+	// Det som händer när man vinner
         private void WonGame()
         {
             MessageBox.Show("You won! Secret word was " + target);
             ResetGame();
         }
-
+	
+	
         private void ResetGame()
         {
 
@@ -184,6 +167,7 @@ namespace Hangman
             tries = 0;
             pictureBox1.Image = Hangman.Properties.Resources._0;
             textBox1.Text = "";
+            WordList_Reader();
             Setting();
         }
 
@@ -225,6 +209,8 @@ namespace Hangman
         }
 
        
+	
+	//Upper tool bar:
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
